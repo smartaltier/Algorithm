@@ -1,0 +1,35 @@
+package com.nsiit.editDistance;
+
+/**
+ * 编辑距离递归处理方案<br/>
+ * 
+ * @author Administrator
+ *
+ */
+public class EditDistance_1 {
+	public static void main(String[] args) {
+		String str1 = "asd1f";
+		String str2 = "asdf1";
+		char[] src = str1.toCharArray();
+		char[] tar = str2.toCharArray();
+
+		System.out.println(editDistance(src, tar, 0, 0));
+	}
+
+	public static int editDistance(char[] src, char[] tar, int src_index,
+			int tar_index) {
+		if (src.length == src_index || tar.length == tar_index) {
+			return Math
+					.abs((src.length - src_index) - (tar.length - tar_index));
+		}
+		if (src[src_index] == tar[tar_index]) {
+			return editDistance(src, tar, src_index + 1, tar_index + 1);
+		}
+
+		int insert = editDistance(src, tar, src_index, tar_index + 1) + 1;
+		int delete = editDistance(src, tar, src_index + 1, tar_index) + 1;
+		int replac = editDistance(src, tar, src_index + 1, tar_index + 1) + 1;
+		return Math.min(Math.min(insert, delete), replac);
+	}
+
+}
